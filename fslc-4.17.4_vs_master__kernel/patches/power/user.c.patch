@@ -1,0 +1,14 @@
+--- /home/hjj/Downloads/linux-master/kernel/power/user.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/power/user.c
+@@ -186,6 +186,11 @@
+ 		res = PAGE_SIZE - pg_offp;
+ 	}
+ 
++	if (!data_of(data->handle)) {
++		res = -EINVAL;
++		goto unlock;
++	}
++
+ 	res = simple_write_to_buffer(data_of(data->handle), res, &pg_offp,
+ 			buf, count);
+ 	if (res > 0)

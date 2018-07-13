@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/configs/android-recommended.config
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/configs/android-recommended.config
+@@ -12,7 +12,7 @@
+ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_BLK_DEV_RAM=y
+ CONFIG_BLK_DEV_RAM_SIZE=8192
+-CONFIG_CC_STACKPROTECTOR_STRONG=y
++CONFIG_STACKPROTECTOR_STRONG=y
+ CONFIG_COMPACTION=y
+ CONFIG_CPU_SW_DOMAIN_PAN=y
+ CONFIG_DM_CRYPT=y

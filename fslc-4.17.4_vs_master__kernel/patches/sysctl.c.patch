@@ -1,0 +1,12 @@
+--- /home/hjj/Downloads/linux-master/kernel/sysctl.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/sysctl.c
+@@ -3047,7 +3047,8 @@
+ 		if (IS_ERR(kbuf))
+ 			return PTR_ERR(kbuf);
+ 
+-		tmp_bitmap = kzalloc(BITS_TO_LONGS(bitmap_len) * sizeof(unsigned long),
++		tmp_bitmap = kcalloc(BITS_TO_LONGS(bitmap_len),
++				     sizeof(unsigned long),
+ 				     GFP_KERNEL);
+ 		if (!tmp_bitmap) {
+ 			kfree(kbuf);

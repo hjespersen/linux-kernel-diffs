@@ -1,0 +1,39 @@
+--- /home/hjj/Downloads/linux-master/kernel/events/ring_buffer.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/events/ring_buffer.c
+@@ -103,7 +103,7 @@
+ 	preempt_enable();
+ }
+ 
+-static bool __always_inline
++static __always_inline bool
+ ring_buffer_has_space(unsigned long head, unsigned long tail,
+ 		      unsigned long data_size, unsigned int size,
+ 		      bool backward)
+@@ -114,7 +114,7 @@
+ 		return CIRC_SPACE(tail, head, data_size) >= size;
+ }
+ 
+-static int __always_inline
++static __always_inline int
+ __perf_output_begin(struct perf_output_handle *handle,
+ 		    struct perf_event *event, unsigned int size,
+ 		    bool backward)
+@@ -414,7 +414,7 @@
+ }
+ EXPORT_SYMBOL_GPL(perf_aux_output_begin);
+ 
+-static bool __always_inline rb_need_aux_wakeup(struct ring_buffer *rb)
++static __always_inline bool rb_need_aux_wakeup(struct ring_buffer *rb)
+ {
+ 	if (rb->aux_overwrite)
+ 		return false;
+@@ -614,7 +614,8 @@
+ 		}
+ 	}
+ 
+-	rb->aux_pages = kzalloc_node(nr_pages * sizeof(void *), GFP_KERNEL, node);
++	rb->aux_pages = kcalloc_node(nr_pages, sizeof(void *), GFP_KERNEL,
++				     node);
+ 	if (!rb->aux_pages)
+ 		return -ENOMEM;
+ 

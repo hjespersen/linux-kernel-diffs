@@ -1,0 +1,10 @@
+--- /home/hjj/Downloads/linux-master/kernel/crash_core.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/crash_core.c
+@@ -460,6 +460,7 @@
+ 	VMCOREINFO_NUMBER(PG_hwpoison);
+ #endif
+ 	VMCOREINFO_NUMBER(PG_head_mask);
++#define PAGE_BUDDY_MAPCOUNT_VALUE	(~PG_buddy)
+ 	VMCOREINFO_NUMBER(PAGE_BUDDY_MAPCOUNT_VALUE);
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	VMCOREINFO_NUMBER(HUGETLB_PAGE_DTOR);

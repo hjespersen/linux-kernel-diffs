@@ -1,0 +1,19 @@
+--- /home/hjj/Downloads/linux-master/kernel/trace/trace_selftest_dynamic.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/trace/trace_selftest_dynamic.c
+@@ -1,12 +1,14 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <linux/compiler.h>
+ #include "trace.h"
+ 
+-int DYN_FTRACE_TEST_NAME(void)
++noinline __noclone int DYN_FTRACE_TEST_NAME(void)
+ {
+ 	/* used to call mcount */
+ 	return 0;
+ }
+ 
+-int DYN_FTRACE_TEST_NAME2(void)
++noinline __noclone int DYN_FTRACE_TEST_NAME2(void)
+ {
+ 	/* used to call mcount */
+ 	return 0;

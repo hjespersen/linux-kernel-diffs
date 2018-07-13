@@ -1,0 +1,22 @@
+--- /home/hjj/Downloads/linux-master/kernel/trace/trace_entries.h
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/trace/trace_entries.h
+@@ -230,7 +230,7 @@
+ 	FILTER_OTHER
+ );
+ 
+-FTRACE_ENTRY(print, print_entry,
++FTRACE_ENTRY_REG(print, print_entry,
+ 
+ 	TRACE_PRINT,
+ 
+@@ -242,7 +242,9 @@
+ 	F_printk("%ps: %s",
+ 		 (void *)__entry->ip, __entry->buf),
+ 
+-	FILTER_OTHER
++	FILTER_OTHER,
++
++	ftrace_event_register
+ );
+ 
+ FTRACE_ENTRY(raw_data, raw_data_entry,

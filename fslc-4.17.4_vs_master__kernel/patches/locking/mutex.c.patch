@@ -1,0 +1,14 @@
+--- /home/hjj/Downloads/linux-master/kernel/locking/mutex.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/locking/mutex.c
+@@ -139,8 +139,9 @@
+ static __always_inline bool __mutex_trylock_fast(struct mutex *lock)
+ {
+ 	unsigned long curr = (unsigned long)current;
+-
+-	if (!atomic_long_cmpxchg_acquire(&lock->owner, 0UL, curr))
++	unsigned long zero = 0UL;
++
++	if (atomic_long_try_cmpxchg_acquire(&lock->owner, &zero, curr))
+ 		return true;
+ 
+ 	return false;

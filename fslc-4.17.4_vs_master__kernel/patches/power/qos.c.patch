@@ -1,0 +1,10 @@
+--- /home/hjj/Downloads/linux-master/kernel/power/qos.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/power/qos.c
+@@ -184,7 +184,6 @@
+ 	c->target_value = value;
+ }
+ 
+-static inline int pm_qos_get_value(struct pm_qos_constraints *c);
+ static int pm_qos_dbg_show_requests(struct seq_file *s, void *unused)
+ {
+ 	struct pm_qos_object *qos = (struct pm_qos_object *)s->private;

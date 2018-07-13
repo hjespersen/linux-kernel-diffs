@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/freezer.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/freezer.c
+@@ -42,7 +42,7 @@
+ 	if (p->flags & (PF_NOFREEZE | PF_SUSPEND_TASK))
+ 		return false;
+ 
+-	if (test_thread_flag(TIF_MEMDIE))
++	if (test_tsk_thread_flag(p, TIF_MEMDIE))
+ 		return false;
+ 
+ 	if (pm_nosig_freezing || cgroup_freezing(p))

@@ -1,0 +1,80 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/nsproxy.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/nsproxy.c
+@@ -25,6 +25,8 @@
+ #include <linux/proc_ns.h>
+ #include <linux/file.h>
+ #include <linux/syscalls.h>
++#include <linux/cgroup.h>
++#include <linux/perf_event.h>
+ 
+ static struct kmem_cache *nsproxy_cachep;
+ 
+@@ -39,6 +41,9 @@
+ #ifdef CONFIG_NET
+ 	.net_ns			= &init_net,
+ #endif
++#ifdef CONFIG_CGROUPS
++	.cgroup_ns		= &init_cgroup_ns,
++#endif
+ };
+ 
+ static inline struct nsproxy *create_nsproxy(void)
+@@ -92,6 +97,13 @@
+ 		goto out_pid;
+ 	}
+ 
++	new_nsp->cgroup_ns = copy_cgroup_ns(flags, user_ns,
++					    tsk->nsproxy->cgroup_ns);
++	if (IS_ERR(new_nsp->cgroup_ns)) {
++		err = PTR_ERR(new_nsp->cgroup_ns);
++		goto out_cgroup;
++	}
++
+ 	new_nsp->net_ns = copy_net_ns(flags, user_ns, tsk->nsproxy->net_ns);
+ 	if (IS_ERR(new_nsp->net_ns)) {
+ 		err = PTR_ERR(new_nsp->net_ns);
+@@ -101,6 +113,8 @@
+ 	return new_nsp;
+ 
+ out_net:
++	put_cgroup_ns(new_nsp->cgroup_ns);
++out_cgroup:
+ 	if (new_nsp->pid_ns_for_children)
+ 		put_pid_ns(new_nsp->pid_ns_for_children);
+ out_pid:
+@@ -128,7 +142,8 @@
+ 	struct nsproxy *new_ns;
+ 
+ 	if (likely(!(flags & (CLONE_NEWNS | CLONE_NEWUTS | CLONE_NEWIPC |
+-			      CLONE_NEWPID | CLONE_NEWNET)))) {
++			      CLONE_NEWPID | CLONE_NEWNET |
++			      CLONE_NEWCGROUP)))) {
+ 		get_nsproxy(old_ns);
+ 		return 0;
+ 	}
+@@ -165,6 +180,7 @@
+ 		put_ipc_ns(ns->ipc_ns);
+ 	if (ns->pid_ns_for_children)
+ 		put_pid_ns(ns->pid_ns_for_children);
++	put_cgroup_ns(ns->cgroup_ns);
+ 	put_net(ns->net_ns);
+ 	kmem_cache_free(nsproxy_cachep, ns);
+ }
+@@ -180,7 +196,7 @@
+ 	int err = 0;
+ 
+ 	if (!(unshare_flags & (CLONE_NEWNS | CLONE_NEWUTS | CLONE_NEWIPC |
+-			       CLONE_NEWNET | CLONE_NEWPID)))
++			       CLONE_NEWNET | CLONE_NEWPID | CLONE_NEWCGROUP)))
+ 		return 0;
+ 
+ 	user_ns = new_cred ? new_cred->user_ns : current_user_ns();
+@@ -247,6 +263,8 @@
+ 		goto out;
+ 	}
+ 	switch_task_namespaces(tsk, new_nsproxy);
++
++	perf_event_namespaces(tsk);
+ out:
+ 	fput(file);
+ 	return err;

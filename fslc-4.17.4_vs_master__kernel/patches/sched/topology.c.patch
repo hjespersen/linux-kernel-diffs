@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/sched/topology.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/sched/topology.c
+@@ -1750,7 +1750,7 @@
+ 	int i;
+ 	cpumask_var_t *doms;
+ 
+-	doms = kmalloc(sizeof(*doms) * ndoms, GFP_KERNEL);
++	doms = kmalloc_array(ndoms, sizeof(*doms), GFP_KERNEL);
+ 	if (!doms)
+ 		return NULL;
+ 	for (i = 0; i < ndoms; i++) {

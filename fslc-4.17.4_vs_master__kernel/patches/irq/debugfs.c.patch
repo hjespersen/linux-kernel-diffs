@@ -1,0 +1,10 @@
+--- /home/hjj/Downloads/linux-master/kernel/irq/debugfs.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/irq/debugfs.c
+@@ -55,6 +55,7 @@
+ 	BIT_MASK_DESCR(IRQCHIP_SKIP_SET_WAKE),
+ 	BIT_MASK_DESCR(IRQCHIP_ONESHOT_SAFE),
+ 	BIT_MASK_DESCR(IRQCHIP_EOI_THREADED),
++	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_LEVEL_MSI),
+ };
+ 
+ static void

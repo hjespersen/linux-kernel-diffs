@@ -1,0 +1,30 @@
+--- /home/hjj/Downloads/linux-master/kernel/cgroup/cpuset.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/cgroup/cpuset.c
+@@ -605,7 +605,7 @@
+  * load balancing domains (sched domains) as specified by that partial
+  * partition.
+  *
+- * See "What is sched_load_balance" in Documentation/cgroups/cpusets.txt
++ * See "What is sched_load_balance" in Documentation/cgroup-v1/cpusets.txt
+  * for a background explanation of this.
+  *
+  * Does not return errors, on the theory that the callers of this
+@@ -683,7 +683,7 @@
+ 		goto done;
+ 	}
+ 
+-	csa = kmalloc(nr_cpusets() * sizeof(cp), GFP_KERNEL);
++	csa = kmalloc_array(nr_cpusets(), sizeof(cp), GFP_KERNEL);
+ 	if (!csa)
+ 		goto done;
+ 	csn = 0;
+@@ -753,7 +753,8 @@
+ 	 * The rest of the code, including the scheduler, can deal with
+ 	 * dattr==NULL case. No need to abort if alloc fails.
+ 	 */
+-	dattr = kmalloc(ndoms * sizeof(struct sched_domain_attr), GFP_KERNEL);
++	dattr = kmalloc_array(ndoms, sizeof(struct sched_domain_attr),
++			      GFP_KERNEL);
+ 
+ 	for (nslot = 0, i = 0; i < csn; i++) {
+ 		struct cpuset *a = csa[i];

@@ -1,0 +1,10 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/utsname_sysctl.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/utsname_sysctl.c
+@@ -14,6 +14,7 @@
+ #include <linux/utsname.h>
+ #include <linux/sysctl.h>
+ #include <linux/wait.h>
++#include <linux/rwsem.h>
+ 
+ #ifdef CONFIG_PROC_SYSCTL
+ 

@@ -1,0 +1,7 @@
+--- /home/hjj/Downloads/linux-master/kernel/.gitignore
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/.gitignore
+@@ -5,4 +5,3 @@
+ config_data.gz
+ timeconst.h
+ hz.bc
+-x509_certificate_list

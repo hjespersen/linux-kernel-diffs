@@ -1,0 +1,19 @@
+--- /home/hjj/Downloads/linux-master/kernel/tracepoint.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/tracepoint.c
+@@ -257,7 +257,7 @@
+ }
+ 
+ /**
+- * tracepoint_probe_register -  Connect a probe to a tracepoint
++ * tracepoint_probe_register_prio -  Connect a probe to a tracepoint with priority
+  * @tp: tracepoint
+  * @probe: probe handler
+  * @data: tracepoint data
+@@ -290,7 +290,6 @@
+  * @tp: tracepoint
+  * @probe: probe handler
+  * @data: tracepoint data
+- * @prio: priority of this function over other registered functions
+  *
+  * Returns 0 if ok, error value on error.
+  * Note: if @tp is within a module, the caller is responsible for

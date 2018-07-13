@@ -1,0 +1,89 @@
+--- /home/hjj/Downloads/linux-master/kernel/time/posix-timers.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/time/posix-timers.c
+@@ -1040,7 +1040,7 @@
+ }
+ 
+ SYSCALL_DEFINE2(clock_settime, const clockid_t, which_clock,
+-		const struct timespec __user *, tp)
++		const struct __kernel_timespec __user *, tp)
+ {
+ 	const struct k_clock *kc = clockid_to_kclock(which_clock);
+ 	struct timespec64 new_tp;
+@@ -1055,7 +1055,7 @@
+ }
+ 
+ SYSCALL_DEFINE2(clock_gettime, const clockid_t, which_clock,
+-		struct timespec __user *,tp)
++		struct __kernel_timespec __user *, tp)
+ {
+ 	const struct k_clock *kc = clockid_to_kclock(which_clock);
+ 	struct timespec64 kernel_tp;
+@@ -1096,7 +1096,7 @@
+ }
+ 
+ SYSCALL_DEFINE2(clock_getres, const clockid_t, which_clock,
+-		struct timespec __user *, tp)
++		struct __kernel_timespec __user *, tp)
+ {
+ 	const struct k_clock *kc = clockid_to_kclock(which_clock);
+ 	struct timespec64 rtn_tp;
+@@ -1113,7 +1113,7 @@
+ 	return error;
+ }
+ 
+-#ifdef CONFIG_COMPAT
++#ifdef CONFIG_COMPAT_32BIT_TIME
+ 
+ COMPAT_SYSCALL_DEFINE2(clock_settime, clockid_t, which_clock,
+ 		       struct compat_timespec __user *, tp)
+@@ -1148,6 +1148,10 @@
+ 	return err;
+ }
+ 
++#endif
++
++#ifdef CONFIG_COMPAT
++
+ COMPAT_SYSCALL_DEFINE2(clock_adjtime, clockid_t, which_clock,
+ 		       struct compat_timex __user *, utp)
+ {
+@@ -1172,6 +1176,10 @@
+ 	return err;
+ }
+ 
++#endif
++
++#ifdef CONFIG_COMPAT_32BIT_TIME
++
+ COMPAT_SYSCALL_DEFINE2(clock_getres, clockid_t, which_clock,
+ 		       struct compat_timespec __user *, tp)
+ {
+@@ -1203,8 +1211,8 @@
+ }
+ 
+ SYSCALL_DEFINE4(clock_nanosleep, const clockid_t, which_clock, int, flags,
+-		const struct timespec __user *, rqtp,
+-		struct timespec __user *, rmtp)
++		const struct __kernel_timespec __user *, rqtp,
++		struct __kernel_timespec __user *, rmtp)
+ {
+ 	const struct k_clock *kc = clockid_to_kclock(which_clock);
+ 	struct timespec64 t;
+@@ -1227,7 +1235,8 @@
+ 	return kc->nsleep(which_clock, flags, &t);
+ }
+ 
+-#ifdef CONFIG_COMPAT
++#ifdef CONFIG_COMPAT_32BIT_TIME
++
+ COMPAT_SYSCALL_DEFINE4(clock_nanosleep, clockid_t, which_clock, int, flags,
+ 		       struct compat_timespec __user *, rqtp,
+ 		       struct compat_timespec __user *, rmtp)
+@@ -1252,6 +1261,7 @@
+ 
+ 	return kc->nsleep(which_clock, flags, &t);
+ }
++
+ #endif
+ 
+ static const struct k_clock clock_realtime = {

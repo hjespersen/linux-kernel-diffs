@@ -1,0 +1,38 @@
+--- /home/hjj/Downloads/linux-master/kernel/time/timer_list.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/time/timer_list.c
+@@ -27,8 +27,6 @@
+ 	bool second_pass;
+ 	u64 now;
+ };
+-
+-typedef void (*print_fn_t)(struct seq_file *m, unsigned int *classes);
+ 
+ /*
+  * This allows printing both to /proc/timer_list and
+@@ -372,24 +370,12 @@
+ 	.show = timer_list_show,
+ };
+ 
+-static int timer_list_open(struct inode *inode, struct file *filp)
+-{
+-	return seq_open_private(filp, &timer_list_sops,
+-			sizeof(struct timer_list_iter));
+-}
+-
+-static const struct file_operations timer_list_fops = {
+-	.open		= timer_list_open,
+-	.read		= seq_read,
+-	.llseek		= seq_lseek,
+-	.release	= seq_release_private,
+-};
+-
+ static int __init init_timer_list_procfs(void)
+ {
+ 	struct proc_dir_entry *pe;
+ 
+-	pe = proc_create("timer_list", 0400, NULL, &timer_list_fops);
++	pe = proc_create_seq_private("timer_list", 0400, NULL, &timer_list_sops,
++			sizeof(struct timer_list_iter), NULL);
+ 	if (!pe)
+ 		return -ENOMEM;
+ 	return 0;

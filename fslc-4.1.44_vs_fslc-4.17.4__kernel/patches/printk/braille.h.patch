@@ -1,0 +1,36 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/printk/braille.h
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/printk/braille.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef _PRINTK_BRAILLE_H
+ #define _PRINTK_BRAILLE_H
+ 
+@@ -9,7 +10,14 @@
+ 	c->brl_options = brl_options;
+ }
+ 
+-char *
++/*
++ * Setup console according to braille options.
++ * Return -EINVAL on syntax error, 0 on success (or no braille option was
++ * actually given).
++ * Modifies str to point to the serial options
++ * Sets brl_options to the parsed braille options.
++ */
++int
+ _braille_console_setup(char **str, char **brl_options);
+ 
+ int
+@@ -25,10 +33,10 @@
+ {
+ }
+ 
+-static inline char *
++static inline int
+ _braille_console_setup(char **str, char **brl_options)
+ {
+-	return NULL;
++	return 0;
+ }
+ 
+ static inline int

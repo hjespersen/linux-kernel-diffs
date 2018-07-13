@@ -1,0 +1,31 @@
+--- /home/hjj/Downloads/linux-master/kernel/module.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/module.c
+@@ -274,9 +274,7 @@
+ }
+ 
+ static bool sig_enforce = IS_ENABLED(CONFIG_MODULE_SIG_FORCE);
+-#ifndef CONFIG_MODULE_SIG_FORCE
+ module_param(sig_enforce, bool_enable_only, 0644);
+-#endif /* !CONFIG_MODULE_SIG_FORCE */
+ 
+ /*
+  * Export sig_enforce kernel cmdline parameter to allow other subsystems rely
+@@ -1604,8 +1602,7 @@
+ 	if (notes == 0)
+ 		return;
+ 
+-	notes_attrs = kzalloc(sizeof(*notes_attrs)
+-			      + notes * sizeof(notes_attrs->attrs[0]),
++	notes_attrs = kzalloc(struct_size(notes_attrs, attrs, notes),
+ 			      GFP_KERNEL);
+ 	if (notes_attrs == NULL)
+ 		return;
+@@ -2786,7 +2783,7 @@
+ 	}
+ 
+ 	/* Not having a signature is only an error if we're strict. */
+-	if (err == -ENOKEY && !sig_enforce)
++	if (err == -ENOKEY && !is_module_sig_enforced())
+ 		err = 0;
+ 
+ 	return err;

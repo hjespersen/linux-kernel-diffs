@@ -1,0 +1,12 @@
+--- /home/hjj/Downloads/linux-master/kernel/events/uprobes.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/events/uprobes.c
+@@ -1184,7 +1184,8 @@
+ 	if (unlikely(!area))
+ 		goto out;
+ 
+-	area->bitmap = kzalloc(BITS_TO_LONGS(UINSNS_PER_PAGE) * sizeof(long), GFP_KERNEL);
++	area->bitmap = kcalloc(BITS_TO_LONGS(UINSNS_PER_PAGE), sizeof(long),
++			       GFP_KERNEL);
+ 	if (!area->bitmap)
+ 		goto free_area;
+ 

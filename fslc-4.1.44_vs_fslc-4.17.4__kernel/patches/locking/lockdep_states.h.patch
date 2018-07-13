@@ -1,0 +1,7 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/locking/lockdep_states.h
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/locking/lockdep_states.h
+@@ -6,4 +6,3 @@
+  */
+ LOCKDEP_STATE(HARDIRQ)
+ LOCKDEP_STATE(SOFTIRQ)
+-LOCKDEP_STATE(RECLAIM_FS)

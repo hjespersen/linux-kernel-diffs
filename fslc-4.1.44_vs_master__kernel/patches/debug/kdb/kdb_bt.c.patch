@@ -1,0 +1,12 @@
+--- /home/hjj/Downloads/linux-master/kernel/debug/kdb/kdb_bt.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/debug/kdb/kdb_bt.c
+@@ -12,7 +12,8 @@
+ #include <linux/ctype.h>
+ #include <linux/string.h>
+ #include <linux/kernel.h>
+-#include <linux/sched.h>
++#include <linux/sched/signal.h>
++#include <linux/sched/debug.h>
+ #include <linux/kdb.h>
+ #include <linux/nmi.h>
+ #include "kdb_private.h"

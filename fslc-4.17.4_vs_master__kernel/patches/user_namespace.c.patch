@@ -1,0 +1,22 @@
+--- /home/hjj/Downloads/linux-master/kernel/user_namespace.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/user_namespace.c
+@@ -764,8 +764,9 @@
+ 		struct uid_gid_extent *forward;
+ 
+ 		/* Allocate memory for 340 mappings. */
+-		forward = kmalloc(sizeof(struct uid_gid_extent) *
+-				 UID_GID_MAP_MAX_EXTENTS, GFP_KERNEL);
++		forward = kmalloc_array(UID_GID_MAP_MAX_EXTENTS,
++					sizeof(struct uid_gid_extent),
++					GFP_KERNEL);
+ 		if (!forward)
+ 			return -ENOMEM;
+ 
+@@ -1235,6 +1236,7 @@
+ {
+ 	return in_userns(target_ns, current_user_ns());
+ }
++EXPORT_SYMBOL(current_in_userns);
+ 
+ static inline struct user_namespace *to_user_ns(struct ns_common *ns)
+ {

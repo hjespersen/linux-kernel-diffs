@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/torture.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/torture.c
+@@ -574,7 +574,7 @@
+ {
+ 	int spt;
+ 
+-	cond_resched_rcu_qs();
++	cond_resched_tasks_rcu_qs();
+ 	spt = READ_ONCE(stutter_pause_test);
+ 	for (; spt; spt = READ_ONCE(stutter_pause_test)) {
+ 		if (spt == 1) {

@@ -1,0 +1,10 @@
+--- /home/hjj/Downloads/linux-master/kernel/irq/manage.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/irq/manage.c
+@@ -24,6 +24,7 @@
+ 
+ #ifdef CONFIG_IRQ_FORCED_THREADING
+ __read_mostly bool force_irqthreads;
++EXPORT_SYMBOL_GPL(force_irqthreads);
+ 
+ static int __init setup_forced_irqthreads(char *arg)
+ {

@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-fslc-4.17.4/kernel/configs.c
++++ /home/hjj/Downloads/linux-fslc-4.1.44/kernel/configs.c
+@@ -28,7 +28,7 @@
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ #include <linux/init.h>
+-#include <asm/uaccess.h>
++#include <linux/uaccess.h>
+ 
+ /**************************************************/
+ /* the actual current config file                 */

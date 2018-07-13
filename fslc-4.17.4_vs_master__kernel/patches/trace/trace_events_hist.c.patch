@@ -1,0 +1,20 @@
+--- /home/hjj/Downloads/linux-master/kernel/trace/trace_events_hist.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/trace/trace_events_hist.c
+@@ -393,7 +393,7 @@
+ 	else if (system)
+ 		snprintf(err, MAX_FILTER_STR_VAL, "%s.%s", system, event);
+ 	else
+-		strncpy(err, var, MAX_FILTER_STR_VAL);
++		strscpy(err, var, MAX_FILTER_STR_VAL);
+ 
+ 	hist_err(str, err);
+ }
+@@ -2865,7 +2865,7 @@
+ {
+ 	struct trace_event_file *file;
+ 
+-	file = find_event_file(tr, system, event_name);
++	file = __find_event_file(tr, system, event_name);
+ 	if (!file)
+ 		return ERR_PTR(-EINVAL);
+ 

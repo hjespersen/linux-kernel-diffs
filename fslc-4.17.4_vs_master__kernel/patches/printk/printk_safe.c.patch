@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/printk/printk_safe.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/printk/printk_safe.c
+@@ -281,7 +281,7 @@
+ 	 * Make sure that we could access the main ring buffer.
+ 	 * Do not risk a double release when more CPUs are up.
+ 	 */
+-	if (in_nmi() && raw_spin_is_locked(&logbuf_lock)) {
++	if (raw_spin_is_locked(&logbuf_lock)) {
+ 		if (num_online_cpus() > 1)
+ 			return;
+ 

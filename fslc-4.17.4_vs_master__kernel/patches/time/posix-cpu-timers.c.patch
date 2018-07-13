@@ -1,0 +1,18 @@
+--- /home/hjj/Downloads/linux-master/kernel/time/posix-cpu-timers.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/time/posix-cpu-timers.c
+@@ -604,7 +604,6 @@
+ 	/*
+ 	 * Disarm any old timer after extracting its expiry time.
+ 	 */
+-	lockdep_assert_irqs_disabled();
+ 
+ 	ret = 0;
+ 	old_incr = timer->it.cpu.incr;
+@@ -1049,7 +1048,6 @@
+ 	/*
+ 	 * Now re-arm for the new expiry time.
+ 	 */
+-	lockdep_assert_irqs_disabled();
+ 	arm_timer(timer);
+ unlock:
+ 	unlock_task_sighand(p, &flags);

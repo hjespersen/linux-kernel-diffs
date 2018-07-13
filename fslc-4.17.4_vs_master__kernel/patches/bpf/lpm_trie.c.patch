@@ -1,0 +1,14 @@
+--- /home/hjj/Downloads/linux-master/kernel/bpf/lpm_trie.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/bpf/lpm_trie.c
+@@ -623,8 +623,9 @@
+ 	if (!key || key->prefixlen > trie->max_prefixlen)
+ 		goto find_leftmost;
+ 
+-	node_stack = kmalloc(trie->max_prefixlen * sizeof(struct lpm_trie_node *),
+-			     GFP_ATOMIC | __GFP_NOWARN);
++	node_stack = kmalloc_array(trie->max_prefixlen,
++				   sizeof(struct lpm_trie_node *),
++				   GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!node_stack)
+ 		return -ENOMEM;
+ 

@@ -1,0 +1,20 @@
+--- /home/hjj/Downloads/linux-master/kernel/kexec_core.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/kexec_core.c
+@@ -829,6 +829,8 @@
+ 		else
+ 			buf += mchunk;
+ 		mbytes -= mchunk;
++
++		cond_resched();
+ 	}
+ out:
+ 	return result;
+@@ -893,6 +895,8 @@
+ 		else
+ 			buf += mchunk;
+ 		mbytes -= mchunk;
++
++		cond_resched();
+ 	}
+ out:
+ 	return result;

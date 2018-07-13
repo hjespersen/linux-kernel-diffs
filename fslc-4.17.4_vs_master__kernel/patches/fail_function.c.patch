@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/fail_function.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/fail_function.c
+@@ -258,7 +258,7 @@
+ 	/* cut off if it is too long */
+ 	if (count > KSYM_NAME_LEN)
+ 		count = KSYM_NAME_LEN;
+-	buf = kmalloc(sizeof(char) * (count + 1), GFP_KERNEL);
++	buf = kmalloc(count + 1, GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 

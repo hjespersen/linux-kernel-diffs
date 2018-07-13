@@ -1,0 +1,11 @@
+--- /home/hjj/Downloads/linux-master/kernel/panic.c
++++ /home/hjj/Downloads/linux-fslc-4.17.4/kernel/panic.c
+@@ -623,7 +623,7 @@
+ device_initcall(register_warn_debugfs);
+ #endif
+ 
+-#ifdef CONFIG_CC_STACKPROTECTOR
++#ifdef CONFIG_STACKPROTECTOR
+ 
+ /*
+  * Called when gcc's -fstack-protector feature is used, and
